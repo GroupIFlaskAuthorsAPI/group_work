@@ -1,0 +1,38 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment directories
+venv/
+env/
+.venv/
+
+# Ignore Flask's instance folder (for configuration, logs, etc.)
+instance/
+
+# Ignore database files
+*.db
+*.sqlite3
+
+# Ignore test and coverage directories
+*.tox/
+*.nox/
+*.coverage
+nosetests.xml
+coverage.xml
+*.cover
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store  # macOS
+Thumbs.db  # Windows
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+
+# Ignore config files or secrets
+*.env
+config.py
