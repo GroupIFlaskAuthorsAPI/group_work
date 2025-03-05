@@ -2,10 +2,10 @@ from flask import Blueprint, request, jsonify
 from app import db
 from models import Company
 
-company_bp = Blueprint('company', __name__)
+company_controller= Blueprint('company', __name__)
 
 # Create Company
-@company_bp.route('/', methods=['POST'])
+@company_controller.route('/', methods=['POST'])
 def create_company():
     data = request.get_json()
     new_company = Company(name=data['name'], location=data.get('location'))
@@ -14,13 +14,13 @@ def create_company():
     return jsonify({'message': 'Company created'}), 201
 
 # Get all Companies
-@company_bp.route('/', methods=['GET'])
+@company_controller.route('/', methods=['GET'])
 def get_all_companies():
     companies = Company.query.all()
     return jsonify([{'id': company.id, 'name': company.name, 'location': company.location} for company in companies])
 
 # Get Company by ID
-@company_bp.route('/<int:id>', methods=['GET'])
+@company_controller.route('/<int:id>', methods=['GET'])
 def get_company_by_id(id):
     company = Company.query.get(id)
     if company:
@@ -28,7 +28,7 @@ def get_company_by_id(id):
     return jsonify({'message': 'Company not found'}), 405
 
 # Update Company
-@company_bp.route('/<int:id>', methods=['PUT'])
+@company_controller.route('/<int:id>', methods=['PUT'])
 def update_company(id):
     company = Company.query.get(id)
     if company:
@@ -40,7 +40,7 @@ def update_company(id):
     return jsonify({'message': 'Company not found'}), 405
 
 # Delete Company
-@company_bp.route('/<int:id>', methods=['DELETE'])
+@company_controller.route('/<int:id>', methods=['DELETE'])
 def delete_company(id):
     company = Company.query.get(id)
     if company:

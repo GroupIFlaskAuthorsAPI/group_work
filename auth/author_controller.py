@@ -4,10 +4,10 @@ from flask import Blueprint, request, jsonify
 from app import db
 from models import Author
 
-author_bp= Blueprint("author",__name__)
+author_controller= Blueprint("aubpthor",__name__)
 
 # Create Author
-@author_bp.route('/',methods=['POST'])
+@author_controller.route('/',methods=['POST'])
 def create_author():
     data = request.get_json()
     new_author=Author(name=data["name"],biography=data.get("biograpy"))
@@ -16,13 +16,13 @@ def create_author():
     return jsonify({'message': ' Author created'}),200
 
 # Get all authors
-@author_bp.route('/',methods=['GET'])
+@author_controller.route('/',methods=['GET'])
 def get_all_author():
     authors= Author.query.all()
     return jsonify([{'id': author.id, 'name':author.name, 'biography':author.biography}for author in authors])
 
 # Get Author by Id
-@author_bp.route('/<int:id>', methods=['GET'])
+@author_controller.route('/<int:id>', methods=['GET'])
 def get_all_authors():
     author = Author.query.all(id)
     if author:
@@ -30,7 +30,7 @@ def get_all_authors():
     return jsonify({'message': ' Author not found'}) , 200
 
 # Update Author
-@author_bp.route('/<int:id>', methods=['put'])
+@author_controller.route('/<int:id>', methods=['put'])
 def update_author(id):
     author=Author.query.get(id)
     if author:
@@ -42,7 +42,7 @@ def update_author(id):
     return jsonify({'message': ' Author not found'}),205
 
 # Delete Author
-@author_bp.route('/<int:id>', methods=['DELETE'])
+@author_controller.route('/<int:id>', methods=['DELETE'])
 def delete_author(id):
     author = Author.query.get(id)
     if author:
