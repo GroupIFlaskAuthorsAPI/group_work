@@ -1,7 +1,6 @@
-# app/__init__.py
 from flask import Flask
 from app.models import db
-from app.controllers.blueprint import author_bp, book_bp, company_bp
+from app.controllers.blueprint import author_bp, book_bp, company_bp  # ✅ Only import once
 from flask_migrate import Migrate
 
 def create_app():
@@ -21,6 +20,7 @@ def create_app():
     app.register_blueprint(company_bp)
 
     return app
+
 
 
 

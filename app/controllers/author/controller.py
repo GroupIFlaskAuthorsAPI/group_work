@@ -2,7 +2,8 @@ from flask import request, jsonify, Blueprint
 from app.models import db, Author
 from werkzeug.security import generate_password_hash, check_password_hash
 
-author_bp = Blueprint('author', __name__)
+# Define the Blueprint with the '/authors' URL prefix
+author_bp = Blueprint('author', __name__, url_prefix='/authors')
 
 # Author Registration
 @author_bp.route('/register', methods=['POST'])
@@ -14,6 +15,7 @@ def register_author():
     email = data.get('email')
     password = data.get('password')
 
+    # Validations for the incoming request 
     if not name or not email or not password:
         return jsonify({"message": "Missing required fields (name, email, password)"}), 400
 
