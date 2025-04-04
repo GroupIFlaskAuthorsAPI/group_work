@@ -9,6 +9,8 @@ class Author(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     books = db.relationship('Book', backref='author', lazy=True)
+    # Adding a new column to force migration
+    date_of_birth = db.Column(db.Date, nullable=True)
 
     def __repr__(self):
         return f'<Author {self.name}>'
