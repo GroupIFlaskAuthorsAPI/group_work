@@ -1,22 +1,24 @@
-from flask import Flask
-from app.extensions import db, migrate
-from app.controller.auth.controller import auth_bp
-from app.controller.books.controller import books_bp
-from app.controller.company.controller import company_bp
-from flask_jwt_extended import JWTManager
+from flask import Flask  # ✅ Import Flask
+from app.models import db
+from app.controllers.blueprint import author_bp, book_bp, company_bp  # Importing blueprints
+from flask_migrate import Migrate
 
-def create_app(config_object='app.config.Config'):
+def create_app():
     app = Flask(__name__)
-    app.config.from_object(config_object)
 
-    # Initialize extensions
+    # Database URI and configuration
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['DEBUG'] = True  # Enable debug mode
+
     db.init_app(app)
-    migrate.init_app(app, db)
-    jwt = JWTManager(app)
+    migrate = Migrate(app, db)
 
-    # Register blueprints
-    app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(books_bp, url_prefix='/books')
-    app.register_blueprint(company_bp, url_prefix='/company')
+    # Register blueprints with their respective prefixes
+    app.register_blueprint(author_bp, url_prefix='/authors')  # Add URL prefix for authors
+    app.register_blueprint(book_bp, url_prefix='/books')      # Add URL prefix for books
+    app.register_blueprint(company_bp, url_prefix='/companies')  # Add URL prefix for companies
 
-    return app
+    return app  # ✅ Ensure the function returns the app properly
+
+
